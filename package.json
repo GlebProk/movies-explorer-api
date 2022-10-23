@@ -1,0 +1,21 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GlebProk/movies-explorer-api.git"
+  },
+  "author": "Gleb Prokofyev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GlebProk/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/GlebProk/movies-explorer-api#readme"
+}
