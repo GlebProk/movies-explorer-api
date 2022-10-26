@@ -31,14 +31,14 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', celebrate({
+app.post('/api/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 }), login);
 
-app.post('/signup', celebrate({
+app.post('/api/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     email: Joi.string().email().required(),
@@ -46,10 +46,10 @@ app.post('/signup', celebrate({
   }),
 }), createUser);
 
-app.post('/logoff', logoff);
+app.post('/api/logoff', logoff);
 
-app.use('/users', auth, require('./routes/users'));
-app.use('/movies', auth, require('./routes/movies'));
+app.use('/api/users', auth, require('./routes/users'));
+app.use('/api/movies', auth, require('./routes/movies'));
 
 app.use(auth, (req, res, next) => {
   next(new NotFoundError('Cтраница не найдена'));
