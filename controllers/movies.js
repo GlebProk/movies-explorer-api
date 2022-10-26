@@ -53,7 +53,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.findByIdMovie = (req, res, next) => {
-  const { movieId } = req.params;
+  const { movieId } = req.params._id;
   Movie.findById(movieId)
     .orFail(() => {
       next(new NotFoundError(`Фильм с указанным идентификатором ${movieId} не найден.`));
