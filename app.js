@@ -11,11 +11,13 @@ const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3005, NODE_ENV, HOST_DB } = process.env;
 
-const app = express();
+const host = NODE_ENV === 'production' ? HOST_DB : 'mongodb://localhost:27017/moviesdb';
 
-mongoose.connect('mongodb://localhost:27017/moviesdb');
+const app = express(host);
+
+mongoose.connect();
 
 app.use(cors);
 
