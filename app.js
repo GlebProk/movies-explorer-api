@@ -15,9 +15,9 @@ const { PORT = 3005, NODE_ENV, HOST_DB } = process.env;
 
 const host = NODE_ENV === 'production' ? HOST_DB : 'mongodb://localhost:27017/moviesdb';
 
-const app = express(host);
+const app = express();
 
-mongoose.connect();
+mongoose.connect(host);
 
 app.use(cors);
 
