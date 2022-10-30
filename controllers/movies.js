@@ -62,7 +62,7 @@ module.exports.findByIdMovie = (req, res, next) => {
       if (movie.owner.toString() !== req.user._id) {
         next(new ForbiddenError('Нельзя удалить чужой фильм'));
       }
-      Movie.findByIdAndRemove(req.params.movieId)
+      return Movie.findByIdAndRemove(req.params.movieId)
         .then(() => res.status(200).send({ message: 'Фильм удален' }))
         .catch((err) => next(err));
     })

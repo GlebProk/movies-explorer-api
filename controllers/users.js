@@ -87,12 +87,13 @@ module.exports.updateInfoByIdUser = (req, res, next) => {
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
-      if (err.statusCode === 404) {
-        next(new NotFoundError('Пользователь c указанным _id не найден'));
-      } else if (err.name === 'ValidationError' || err.name === 'CastError') {
-        next(new InputError('Переданы некорректные данные при обновлении профиля'));
-      } else next(err);
-    });
+      if (err.name === 'MongoError' && err.code === 11000) {
+        throw new ConflictError('Пользователь с таким email уже существует');
+      } else {
+        next(err);
+      }
+    })
+    .catch(next);
 };
 
 module.exports.login = (req, res, next) => {

@@ -1,32 +1,46 @@
 const router = require('express').Router();
 
-const { Joi, celebrate } = require('celebrate');
+const { Joi, celebrate, CelebrateError } = require('celebrate');
+const { isURL } = require('validator');
 
 const {
   findMovie, createMovie, findByIdMovie,
 } = require('../controllers/movies');
 
-const UrlType = /^http(s)?:\/\/(www.)?([0-9A-Za-z.@:%_/+-~#=]+)+(.[a-zA-Z]{2,3})(\/[0-9A-Za-z.@:%_/+-~#=]+)*$/;
+router.get('/api/movies', findMovie);
 
-router.get('/', findMovie);
-
-router.post('/', celebrate({
+router.post('/api/movies', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().pattern(UrlType),
-    trailerLink: Joi.string().required().pattern(UrlType),
+    image: Joi.string().required().custom((value) => {
+      if (!isURL(value)) {
+        throw new CelebrateError('Необходимо указать ссылку');
+      }
+      return value;
+    }),
+    trailerLink: Joi.string().required().custom((value) => {
+      if (!isURL(value)) {
+        throw new CelebrateError('Необходимо указать ссылку');
+      }
+      return value;
+    }),
+    thumbnail: Joi.string().required().custom((value) => {
+      if (!isURL(value)) {
+        throw new CelebrateError('Необходимо указать ссылку');
+      }
+      return value;
+    }),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    thumbnail: Joi.string().required().pattern(UrlType),
     movieId: Joi.number().integer().required(),
   }),
 }), createMovie);
 
-router.delete('/:movieId', celebrate({
+router.delete('/api/movies/:movieId', celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().hex().length(24).required(),
   }),

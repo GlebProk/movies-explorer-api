@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 

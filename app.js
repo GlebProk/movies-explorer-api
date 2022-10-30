@@ -1,11 +1,9 @@
-// eslint-disable-next-line import/no-unresolved
 require('dotenv').config();
 const express = require('express');
-const { errors, Joi, celebrate } = require('celebrate');
+const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { login, createUser, logoff } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -33,27 +31,11 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/api/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-  }),
-}), login);
+app.use(auth);
+app.use(require('./routes/users'));
+app.use(require('./routes/movies'));
 
-app.post('/api/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-  }),
-}), createUser);
-
-app.post('/api/logoff', logoff);
-
-app.use('/api/users', auth, require('./routes/users'));
-app.use('/api/movies', auth, require('./routes/movies'));
-
-app.use(auth, (req, res, next) => {
+app.use((req, res, next) => {
   next(new NotFoundError('Cтраница не найдена'));
 });
 
