@@ -7,9 +7,9 @@ const {
   findMovie, createMovie, findByIdMovie,
 } = require('../controllers/movies');
 
-router.get('/api/movies', findMovie);
+router.get('/', findMovie);
 
-router.post('/api/movies', celebrate({
+router.post('/', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
@@ -40,7 +40,7 @@ router.post('/api/movies', celebrate({
   }),
 }), createMovie);
 
-router.delete('/api/movies/:movieId', celebrate({
+router.delete('/:movieId', celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().hex().length(24).required(),
   }),

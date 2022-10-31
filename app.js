@@ -4,10 +4,10 @@ const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
+const routes = require('./routes');
 
 const { PORT = 3000, NODE_ENV, HOST_DB } = process.env;
 
@@ -31,9 +31,7 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.use(auth);
-app.use(require('./routes/users'));
-app.use(require('./routes/movies'));
+app.use(routes);
 
 app.use((req, res, next) => {
   next(new NotFoundError('Cтраница не найдена'));

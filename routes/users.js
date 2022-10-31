@@ -5,17 +5,17 @@ const {
   findUser, findByIdUser, findByUsersMe, updateInfoByIdUser,
 } = require('../controllers/users');
 
-router.get('/api/users', findUser);
+router.get('/', findUser);
 
-router.get('/api/users/me', findByUsersMe);
+router.get('/me', findByUsersMe);
 
-router.get('/api/users/:userId', celebrate({
+router.get('/:userId', celebrate({
   params: Joi.object().keys({
     userId: Joi.string().required().hex().length(24),
   }),
 }), findByIdUser);
 
-router.patch('/api/users/me', celebrate({
+router.patch('/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
     email: Joi.string().email().required(),
