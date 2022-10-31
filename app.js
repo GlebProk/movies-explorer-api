@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 app.use(requestLogger); // подключаем логгер запросов
 
-app.get('/crash-test', () => {
+app.get('/api/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
