@@ -27,7 +27,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => isURL(v),
-      message: 'Неправльный формат ссылки',
+      message: 'Неправильный формат ссылки',
     },
   },
   trailerLink: {
@@ -35,7 +35,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => isURL(v),
-      message: 'Неправльный формат ссылки',
+      message: 'Неправильный формат ссылки',
     },
   },
   thumbnail: {
@@ -43,7 +43,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => isURL(v),
-      message: 'Неправльный формат ссылки',
+      message: 'Неправильный формат ссылки',
     },
   },
   owner: {
@@ -55,7 +55,6 @@ const movieSchema = new mongoose.Schema({
     type: Number,
     ref: 'movie',
     required: true,
-    unique: true,
   },
   nameRU: {
     type: String,
