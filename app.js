@@ -9,7 +9,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
 const routes = require('./routes');
 
-const { PORT = 3005, NODE_ENV, HOST_DB } = process.env;
+const { PORT = 3000, NODE_ENV, HOST_DB } = process.env;
 
 const host = NODE_ENV === 'production' ? HOST_DB : 'mongodb://localhost:27017/moviesdb';
 
