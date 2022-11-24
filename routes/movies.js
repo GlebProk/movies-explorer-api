@@ -36,7 +36,7 @@ router.post('/', celebrate({
     }),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    movieId: Joi.number().required(),
+    movieId: Joi.number().integer().required(),
   }),
 }), createMovie);
 
