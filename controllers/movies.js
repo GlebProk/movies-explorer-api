@@ -4,12 +4,6 @@ const InputError = require('../errors/InputError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
-module.exports.findMovie = (req, res, next) => {
-  Movie.find({ owner: req.user._id })
-    .then((movies) => res.send(movies))
-    .catch(next);
-};
-
 module.exports.createMovie = (req, res, next) => {
   const {
     country,
@@ -50,6 +44,14 @@ module.exports.createMovie = (req, res, next) => {
         next(new InputError('Переданы некорректные данные при создании фильма'));
       } else next(err);
     });
+};
+
+module.exports.findMovie = (req, res, next) => {
+  Movie.find({ owner: req.user._id })
+    .then((movies) => {
+      res.send(movies);
+    })
+    .catch(next);
 };
 
 module.exports.findByIdMovie = (req, res, next) => {
